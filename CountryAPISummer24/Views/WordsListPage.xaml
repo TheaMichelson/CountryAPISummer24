@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="CountryAPISummer24.Views.WordsListPage"
+            xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:model="clr-namespace:CountryAPISummer24.Models"
+            xmlns:viewmodel="clr-namespace:CountryAPISummer24.ViewModels"
+            Title="{Binding Title}"
+            x:DataType="viewmodel:WordsListViewModel">
+    <Grid
+    Padding="10"
+    RowDefinitions="Auto,*"
+    RowSpacing="10">
+        <Frame
+        Grid.Row="0"
+        BackgroundColor="LightGray"
+        CornerRadius="6">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <SearchBar
+                Grid.Column="0"
+                IsSpellCheckEnabled="False"
+                Placeholder="Search.."
+                PlaceholderColor="Gray"
+                SearchCommand="{Binding SearchCommand}"
+                Text="{Binding SearchText, Mode=TwoWay}"
+                TextColor="Blue" />
+                <Button
+                Grid.Column="1"
+                BackgroundColor="#2196F3"
+                Command="{Binding DetailsCommand}"
+                HeightRequest="40"
+                Text="Details"
+                TextColor="White"
+                WidthRequest="100" />
+            </Grid>
+        </Frame>
+        <RefreshView
+        Grid.Row="1"
+        Command="{Binding RefreshCommand}"
+        IsRefreshing="{Binding IsBusy}">
+            <CollectionView
+            ItemsSource="{Binding Words}"
+            SelectedItem="{Binding SelectedWord, Mode=TwoWay}"
+            SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Words">
+                        <Frame Margin="0,5" Padding="10" BorderColor="LightGray">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label 
+                                Grid.Column="1" 
+                                Text="{Binding Word}" 
+                                Margin="10,0,0,0"
+                                VerticalOptions="Center"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>
